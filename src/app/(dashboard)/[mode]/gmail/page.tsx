@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
@@ -43,7 +44,8 @@ const typeConfig: Record<string, { icon: React.ComponentType<{ className?: strin
 };
 
 export default function GmailPage() {
-  const { emails, addTask, mode } = useData();
+  const { data: session } = useSession();
+  const { emails, addTask, addEmail, mode } = useData();
   const emailList = emails; // Always use context data (demo mode already provides static data via DataProvider)
   const [selected, setSelected] = useState<Email | null>(emailList[0] ?? null);
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
@@ -52,12 +54,95 @@ export default function GmailPage() {
   const detected = emailList.filter((e) => e.detectedType !== 'none' && e.extractedTask);
   const unread = emailList.filter((e) => !e.read).length;
 
-  const rescan = () => {
+  const rescan = async () => {
+    if (mode === 'demo') {
+      setScanning(true);
+      setTimeout(() => {
+        setScanning(false);
+        toast.success('Inbox scanned', { description: `${detected.length} tasks detected across ${emailList.length} emails` });
+      }, 1800);
+      return;
+    }
+
+    if (!session || !(session as any).accessToken) {
+      toast.error('Not authenticated with Google. Please sign out and sign back in.');
+      return;
+    }
+
     setScanning(true);
-    setTimeout(() => {
+    try {
+      // 1. Fetch latest emails from Gmail API
+      const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=5&q=is:unread', {
+        headers: { Authorization: `Bearer ${(session as any).accessToken}` }
+      });
+      if (!res.ok) throw new Error('Failed to fetch from Gmail');
+      const data = await res.json();
+      
+      if (!data.messages || data.messages.length === 0) {
+        toast.info('No new unread emails found.');
+        setScanning(false);
+        return;
+      }
+
+      let newTasksCount = 0;
+
+      // 2. Fetch full email for each message
+      for (const msg of data.messages) {
+        const msgRes = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${msg.id}`, {
+          headers: { Authorization: `Bearer ${(session as any).accessToken}` }
+        });
+        const msgData = await msgRes.json();
+        
+        const headers = msgData.payload.headers;
+        const subject = headers.find((h: any) => h.name === 'Subject')?.value || '(No subject)';
+        const from = headers.find((h: any) => h.name === 'From')?.value || 'Unknown';
+        
+        let body = msgData.snippet;
+        if (msgData.payload.parts) {
+          const textPart = msgData.payload.parts.find((p: any) => p.mimeType === 'text/plain');
+          if (textPart && textPart.body.data) {
+            body = atob(textPart.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+          }
+        } else if (msgData.payload.body && msgData.payload.body.data) {
+          body = atob(msgData.payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+        }
+
+        // 3. Process with AI Agent
+        const agentRes = await fetch('/api/agents/gmail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject, body, from }),
+        });
+        
+        const agentData = await agentRes.json();
+        const extracted = agentData.extracted;
+        
+        // 4. Save to Firestore
+        await addEmail({
+          subject,
+          from: from.split('<')[0].trim(),
+          fromEmail: from.includes('<') ? from.split('<')[1].replace('>', '') : from,
+          preview: msgData.snippet || body.substring(0, 100),
+          body,
+          receivedAt: parseInt(msgData.internalDate),
+          read: false,
+          avatarColor: '#' + Math.floor(Math.random()*16777215).toString(16),
+          detectedType: extracted?.detectedType || 'none',
+          extractedTask: extracted,
+        });
+        
+        if (extracted && extracted.detectedType !== 'none') {
+          newTasksCount++;
+        }
+      }
+      
+      toast.success('Inbox scanned', { description: `Found ${data.messages.length} emails, detected ${newTasksCount} tasks.` });
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to scan inbox. Do you have Gmail permissions? Try signing out and back in.');
+    } finally {
       setScanning(false);
-      toast.success('Inbox scanned', { description: `${detected.length} tasks detected across ${emailList.length} emails` });
-    }, 1800);
+    }
   };
 
   const accept = async (email: Email) => {
