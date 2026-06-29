@@ -7,7 +7,7 @@
 
   <br/>
 
-  <img src="./public/vibe2ship.png" alt="Vibe 2 Ship — CodingNinjas x Google for Developers" width="340"/>
+  <img src="./public/vibe2ship-logo.png" alt="Vibe 2 Ship — CodingNinjas x Google for Developers" width="340"/>
 
   <br/><br/>
 
