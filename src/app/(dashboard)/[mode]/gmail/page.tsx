@@ -124,7 +124,7 @@ export default function GmailPage() {
           fromEmail: from.includes('<') ? from.split('<')[1].replace('>', '') : from,
           preview: msgData.snippet || body.substring(0, 100),
           body,
-          receivedAt: parseInt(msgData.internalDate),
+          receivedAt: msgData.internalDate ? new Date(parseInt(msgData.internalDate)).toISOString() : new Date().toISOString(),
           read: false,
           avatarColor: '#' + Math.floor(Math.random()*16777215).toString(16),
           detectedType: extracted?.detectedType || 'none',
