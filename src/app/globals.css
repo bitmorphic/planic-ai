@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   PLANIC AI — DESIGN SYSTEM
+   Monochromatic Graphite · Vercel × Linear × Notion polish
+   Single source of truth: HSL semantic tokens (no hex drift)
+   Discipline: 95% graphite · 4% primary · 1% semantic
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* ---------- LIGHT THEME (Monochromatic Graphite) ---------- */
+    --background: 0 0% 100%;             /* #FFFFFF */
+    --foreground: 0 0% 9%;               /* #171717 */
+
+    --surface: 0 0% 98%;                 /* #FAFAFA */
+    --surface-elevated: 0 0% 96%;        /* #F5F5F5 */
+    --card: 0 0% 100%;                   /* #FFFFFF */
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    --primary: 0 0% 9%;                  /* Near-black */
+    --primary-foreground: 0 0% 100%;     /* White */
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 94%;                   /* #F0F0F0 */
+    --muted-foreground: 0 0% 45%;        /* #737373 */
+
+    --accent: 0 0% 9%;                   /* Same as primary — graphite */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;            /* #EF4444 — semantic red */
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 72% 39%;              /* #16A34A — semantic green */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;               /* #F59E0B — semantic amber */
+    --warning-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;                  /* #E0E0E0 */
+    --border-strong: 0 0% 75%;           /* #BFBFBF */
+    --input: 0 0% 88%;
+    --ring: 0 0% 9%;
+
+    --radius: 0.5rem;                    /* Sharper — brutalist */
+
+    /* Elevation shadows (graphite, no blue tint) */
+    --shadow-elev-1: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+    --shadow-elev-2: 0 4px 8px -2px rgb(0 0 0 / 0.12);
+    --shadow-elev-3: 0 12px 28px -8px rgb(0 0 0 / 0.16);
+
+    /* Glass */
+    --glass-bg: 255 255 255 / 0.8;
+    --glass-border: 0 0 0 / 0.06;
+  }
+
+  .dark {
+    /* ---------- DARK THEME (Monochromatic Graphite) ---------- */
+    --background: 0 0% 5%;               /* #0D0D0D — true graphite black */
+    --foreground: 0 0% 95%;              /* #F2F2F2 */
+
+    --surface: 0 0% 9%;                  /* #171717 */
+    --surface-elevated: 0 0% 12%;        /* #1F1F1F */
+    --card: 0 0% 12%;                    /* #1F1F1F */
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 95%;                 /* Near-white */
+    --primary-foreground: 0 0% 5%;       /* Black */
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 16%;                   /* #292929 */
+    --muted-foreground: 0 0% 55%;        /* #8C8C8C */
+
+    --accent: 0 0% 95%;                  /* Same as primary — graphite */
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84% 64%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 72% 46%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 52%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;                  /* #2E2E2E */
+    --border-strong: 0 0% 28%;           /* #474747 */
+    --input: 0 0% 18%;
+    --ring: 0 0% 95%;
+
+    /* Elevation shadows (deep, achromatic) */
+    --shadow-elev-1: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+    --shadow-elev-2: 0 4px 8px -2px rgb(0 0 0 / 0.6);
+    --shadow-elev-3: 0 16px 32px -8px rgb(0 0 0 / 0.7);
+
+    --glass-bg: 23 23 23 / 0.6;
+    --glass-border: 255 255 255 / 0.06;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    font-synthesis-weight: none;
+  }
+  /* Typographic defaults — display face for headings */
+  h1, h2, h3, h4 {
+    font-family: var(--font-geist-sans), var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: hsl(var(--foreground) / 0.15);
+  }
+
+  /* Custom scrollbar — refined */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  /* Reduced-motion respect */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------- Eyebrow label (used on every section) ---------- */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground;
+  }
+  .eyebrow-dot {
+    @apply h-1 w-1 rounded-full bg-muted-foreground;
+  }
+
+  /* ---------- Section rhythm ---------- */
+  .section {
+    @apply py-20 sm:py-28;
+  }
+
+  /* ---------- Glassmorphism (used sparingly) ---------- */
+  .glass {
+    background: hsl(var(--surface) / 0.8);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+  .dark .glass {
+    background: hsl(0 0% 12% / 0.6);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  /* ---------- Card elevation ---------- */
+  .card-elevated {
+    @apply rounded-xl border border-border bg-card;
+    box-shadow: var(--shadow-elev-1);
+    transition: border-color 0.25s ease;
+  }
+  .card-elevated:hover {
+    border-color: hsl(var(--border-strong));
+  }
+
+  /* ---------- Shimmer skeleton ---------- */
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-muted;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.04),
+      transparent
+    );
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* ---------- Card hover lift (subtle) ---------- */
+  .lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  .lift:hover {
+    transform: translateY(-1px);
+  }
+
+  /* ---------- Animated underline ---------- */
+  .link-underline {
+    @apply relative;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 h-px w-0 bg-current transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+}
+
+/* ---------- Kbd styling ---------- */
+kbd {
+  @apply inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded border border-border bg-muted px-1 font-mono text-[10px] font-medium text-muted-foreground;
+}

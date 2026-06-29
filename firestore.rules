@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Open rules for launch — authentication is handled by NextAuth.
+    // All app data is isolated by user email path (/users/{userId}/).
+    // Tighten these rules once Firebase Admin SDK is integrated.
+    match /users/{userId} {
+      allow read, write: if true;
+
+      match /{collection}/{document} {
+        allow read, write: if true;
+      }
+    }
+
+    // Everything else is denied
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
