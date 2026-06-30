@@ -75,16 +75,7 @@ export function Footer() {
               ))}
             </div>
 
-            {/* Product Hunt Bar */}
-            <div className="mt-6 border-t border-border pt-6">
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 rounded-full border border-[#DA552F]/20 bg-[#DA552F]/10 px-3 py-1.5 text-xs font-medium text-[#DA552F] transition-colors hover:bg-[#DA552F]/20"
-              >
-                <SiProducthunt className="h-4 w-4" />
-                Launching soon on Product Hunt
-              </a>
-            </div>
+
           </div>
 
           {/* Link columns */}
