@@ -38,7 +38,6 @@ const columns = [
 ];
 
 const socials = [
-  { icon: SiX, label: 'Twitter', href: 'https://x.com/bitmorphic_', color: 'text-foreground' },
   { icon: SiGithub, label: 'GitHub', href: 'https://github.com/bitmorphic', color: 'text-foreground' },
   { icon: FaLinkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/mohammad-anas-69089b39b/', color: 'text-[#0A66C2]' },
 ];
