@@ -28,6 +28,13 @@ const columns = [
       { label: 'Productivity DNA', href: '/demo/dna' },
     ],
   },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms' },
+    ],
+  },
 ];
 
 const socials = [
