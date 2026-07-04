@@ -192,7 +192,7 @@ flowchart LR
 ## 📁 Project Structure
 
 ```
-futureyouai/
+planic-ai/
 ├── public/
 │   ├── planic-ai-logo.png
 │   └── vibe2ship.png
