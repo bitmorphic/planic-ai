@@ -29,7 +29,7 @@
 
 ---
 
-## 🚀 The Problem: Tool Fatigue is Killing Productivity
+## The Problem: Tool Fatigue is Killing Productivity
 
 Students, professionals, and entrepreneurs frequently miss deadlines, bill payments, and interviews — not because they lack tools, but because existing tools create **"tool fatigue."** Data is fragmented across calendars, financial apps, to-do lists, and email clients, and passive reminders are trivially easy to ignore.
 
