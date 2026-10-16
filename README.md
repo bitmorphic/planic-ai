@@ -37,19 +37,19 @@ Students, professionals, and entrepreneurs frequently miss deadlines, bill payme
 
 ---
 
-## 🔥 Core Features
+## Core Features
 
 | Feature | Description |
 |---|---|
-| 📊 **Command Center** | Central dashboard aggregating all active modules with a real-time Accountability Score |
-| 🚨 **Panic Mode** | High-contrast brutalist UI locks in. Gemini triages and restructures tasks to surface the single most critical action |
-| 🤖 **AI Planner** | Ingests ambiguous goals (e.g., *"Launch a Startup"*) and autonomously breaks them into daily, actionable sub-tasks |
-| 📧 **Gmail Intelligence** | Parses incoming emails to extract action items, detect deadlines, and convert static emails into tracked tasks |
-| 💸 **Bill Guardian** | Scans connected data streams for upcoming bills and recurring subscriptions so payment deadlines are never missed |
+| **Command Center** | Central dashboard aggregating all active modules with a real-time Accountability Score |
+| **Panic Mode** | High-contrast brutalist UI locks in. Gemini triages and restructures tasks to surface the single most critical action |
+| **AI Planner** | Ingests ambiguous goals (e.g., *"Launch a Startup"*) and autonomously breaks them into daily, actionable sub-tasks |
+| **Gmail Intelligence** | Parses incoming emails to extract action items, detect deadlines, and convert static emails into tracked tasks |
+| **Bill Guardian** | Scans connected data streams for upcoming bills and recurring subscriptions so payment deadlines are never missed |
 
 ---
 
-## 🏗️ Architecture & AI Agent Workflows
+## Architecture & AI Agent Workflows
 
 ### 1. AI Planner — Autonomous Goal Breakdown
 
@@ -80,14 +80,14 @@ A background serverless agent scans the connected inbox, forwards email content 
 
 ```mermaid
 flowchart TD
-    A[📧 Incoming Email / Data Stream] --> B[Next.js Serverless Function]
-    B --> C{⚡ Google Gemini Parsing Engine}
+    A[ Incoming Email / Data Stream] --> B[Next.js Serverless Function]
+    B --> C{Google Gemini Parsing Engine}
 
-    C -->|Action Item Detected| D[🗂️ Create Task in Firestore]
-    C -->|Due Date Detected| E[📅 Update Deadline Radar]
-    C -->|Invoice / Bill Detected| F[💳 Add to Bill Guardian]
+    C -->|Action Item Detected| D[Create Task in Firestore]
+    C -->|Due Date Detected| E[Update Deadline Radar]
+    C -->|Invoice / Bill Detected| F[Add to Bill Guardian]
 
-    D --> G[🖥️ Command Center Dashboard]
+    D --> G[Command Center Dashboard]
     E --> G
     F --> G
 
@@ -104,14 +104,14 @@ When the user is overwhelmed, Panic Mode locks the UI and invokes Gemini to perf
 
 ```mermaid
 flowchart LR
-    A[🚨 User Activates Panic Mode] --> B[UI locks into Brutalist Mode]
+    A[User Activates Panic Mode] --> B[UI locks into Brutalist Mode]
     B --> C[Fetch all active tasks from Firestore]
     C --> D{Google Gemini Triage}
     D --> E[Rank tasks by urgency + impact]
     E --> F[Surface #1 critical task]
     F --> G[Block all other UI interactions]
     G --> H[User completes critical task]
-    H --> I[Panic Mode deactivated ✅]
+    H --> I[Panic Mode deactivated ]
 
     style A fill:#FF3B30,color:#fff,stroke:none
     style D fill:#8E75B2,color:#fff,stroke:none
@@ -120,7 +120,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Local Development
+## Local Development
 
 ### 1. Clone the repository
 ```bash
@@ -180,7 +180,7 @@ flowchart LR
     B --> C[Node.js Buildpack]
     C --> D[Container Image → Artifact Registry]
     D --> E[Deploy to Cloud Run]
-    E --> F[🌐 Live on Public URL]
+    E --> F[Live on Public URL]
 
     style A fill:#24292e,color:#fff,stroke:none
     style E fill:#4285F4,color:#fff,stroke:none
@@ -189,7 +189,7 @@ flowchart LR
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 planic-ai/
